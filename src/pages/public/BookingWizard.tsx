@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CalendarScheduler } from '@/components/ui/calendar-scheduler';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -29,7 +29,6 @@ import {
   Stethoscope,
   Check,
   ChevronRight,
-  Phone,
   MessageCircle,
   Download,
 } from 'lucide-react';
@@ -84,9 +83,7 @@ export default function BookingWizard() {
   const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
   const [dateAvailability, setDateAvailability] = useState<Map<string, { total: number; remaining: number }>>(new Map());
   const [isLoading, setIsLoading] = useState(false);
-  const [isCheckingSlot, setIsCheckingSlot] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [showTimeSlots, setShowTimeSlots] = useState(false);
   
   const [booking, setBooking] = useState<BookingData>({
     service: null,
@@ -295,15 +292,6 @@ export default function BookingWizard() {
     return dateAvailability.get(dateStr);
   };
 
-  const getDateStatus = (date: Date) => {
-    const avail = getDateAvailability(date);
-    if (!avail) return 'loading';
-    if (avail.remaining === 0) return 'full';
-    const percentage = (avail.remaining / avail.total) * 100;
-    if (percentage < 30) return 'limited';
-    return 'available';
-  };
-
   const formatPhone = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
     if (cleaned.startsWith('212')) {
@@ -341,7 +329,7 @@ export default function BookingWizard() {
               <CardContent className="space-y-6">
                 {/* Steps */}
                 <div className="space-y-4">
-                  {STEPS.map((step, index) => {
+                  {STEPS.map((step) => {
                     const isCompleted = completedSteps >= step.id;
                     const isCurrent = currentStep === step.id;
                     const Icon = step.icon;
