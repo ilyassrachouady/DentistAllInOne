@@ -4,6 +4,9 @@ import { fr } from 'date-fns/locale/fr';
 import { api } from '@/lib/api';
 import { demoDentist } from '@/lib/mock-data';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Calendar } from '@/components/ui/calendar';
@@ -415,7 +418,7 @@ export default function PatientDemoPage() {
                     <Input
                       id="name"
                       value={patientName}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPatientName(e.target.value)}
+                      onChange={(e) => setPatientName(e.target.value)}
                       className="rounded-xl"
                       placeholder="Votre nom"
                       required
@@ -428,7 +431,7 @@ export default function PatientDemoPage() {
                       id="phone"
                       type="tel"
                       value={patientPhone}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPatientPhone(e.target.value)}
+                      onChange={(e) => setPatientPhone(e.target.value)}
                       className="rounded-xl"
                       placeholder="+212 6 12 34 56 78"
                       required
@@ -441,7 +444,7 @@ export default function PatientDemoPage() {
                       id="email"
                       type="email"
                       value={patientEmail}
-                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPatientEmail(e.target.value)}
+                      onChange={(e) => setPatientEmail(e.target.value)}
                       className="rounded-xl"
                       placeholder="votre@email.com"
                     />
@@ -452,7 +455,7 @@ export default function PatientDemoPage() {
                     <Textarea
                       id="notes"
                       value={notes}
-                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)}
+                      onChange={(e) => setNotes(e.target.value)}
                       className="rounded-xl"
                       placeholder="Informations supplémentaires..."
                       rows={3}

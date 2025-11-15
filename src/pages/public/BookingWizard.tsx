@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale/fr';
@@ -81,7 +82,6 @@ export default function BookingWizard() {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
-  const [dateAvailability, setDateAvailability] = useState<Map<string, { total: number; remaining: number }>>(new Map());
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   
@@ -114,9 +114,11 @@ export default function BookingWizard() {
 
   // Load availability when service selected
   useEffect(() => {
+    console.log("Service selected:", booking.service);
     if (booking.service) {
       // Pre-load availability for current month
       loadMonthAvailability();
+      loadTimeSlots();
     }
   }, [booking.service]);
 
@@ -158,10 +160,10 @@ export default function BookingWizard() {
       }
     }
     
-    setDateAvailability(availabilityMap);
   };
 
   const loadTimeSlots = async () => {
+    console.log("Loading time slots for date:", selectedDate);
     if (!selectedDate || !dentist || !booking.service) {
       setAvailableSlots([]);
       return;
@@ -170,6 +172,7 @@ export default function BookingWizard() {
     setIsLoading(true);
     try {
       const slots = await api.getAvailableSlots(dentist.id, selectedDate);
+      console.log("Available slots:", slots);
       
       if (!slots || slots.length === 0) {
         setAvailableSlots([]);
@@ -192,14 +195,6 @@ export default function BookingWizard() {
       setAvailableSlots(timeSlots);
       
       // Update date availability
-      const totalCapacity = timeSlots.reduce((sum, slot) => sum + slot.capacity, 0);
-      const totalRemaining = timeSlots.reduce((sum, slot) => sum + slot.remaining, 0);
-      const dateStr = format(selectedDate, 'yyyy-MM-dd');
-      setDateAvailability(prev => {
-        const newMap = new Map(prev);
-        newMap.set(dateStr, { total: totalCapacity, remaining: totalRemaining });
-        return newMap;
-      });
     } catch (error) {
       console.error('Error loading time slots:', error);
       setAvailableSlots([]);
@@ -280,11 +275,6 @@ export default function BookingWizard() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const getDateAvailability = (date: Date) => {
-    const dateStr = format(date, 'yyyy-MM-dd');
-    return dateAvailability.get(dateStr);
   };
 
   const formatPhone = (value: string) => {
@@ -449,12 +439,7 @@ export default function BookingWizard() {
                       <CalendarScheduler
                         timeSlots={availableSlots.length > 0 ? availableSlots.map(s => formatTime12h(s.time)) : []}
                         disabledDates={(date) => date < new Date()}
-                        onDateChange={(date) => {
-                          handleDateSelect(date);
-                          if (date) {
-                            setShowTimeSlots(true);
-                          }
-                        }}
+                        onDateChange={handleDateSelect}
                         onConfirm={({ date, time }) => {
                           if (date && time) {
                             // Update selected date
