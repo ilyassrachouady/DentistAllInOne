@@ -6,6 +6,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import BookingPage from './pages/public/BookingPage';
 import BookingWizard from './pages/public/BookingWizard';
+import PatientDemoPage from './pages/public/PatientDemoPage';
 import DashboardLayout from './layouts/DashboardLayout';
 import DashboardHome from './pages/dashboard/DashboardHome';
 import PatientsPage from './pages/dashboard/PatientsPage';
@@ -44,7 +45,7 @@ function AppRoutes() {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/dentist/:id" element={<BookingPage />} />
-      <Route path="/demo" element={<BookingWizard />} />
+      <Route path="/demo" element={<PatientDemoPage />} />
       <Route path="/book" element={<BookingWizard />} />
       <Route path="/wizard" element={<BookingWizard />} />
 
