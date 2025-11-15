@@ -116,7 +116,7 @@ function Calendar({
 
       {/* Weekday Labels */}
       <div className="grid grid-cols-7 gap-2 mb-4">
-        {["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"].map((day) => (
+        {["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"].map((day) => (
           <div
             key={day}
             className="text-center text-xs font-medium text-muted-foreground h-8 flex items-center justify-center"
@@ -138,6 +138,9 @@ function Calendar({
           month: "w-full",
         }}
         components={mergedComponents}
+        weekStartsOn={1}
+        modifiers={props.modifiers}
+        modifiersClassNames={props.modifiersClassNames}
         {...props}
       />
       <style>{`
@@ -170,6 +173,15 @@ function Calendar({
         .rdp-day_button[data-disabled="true"] {
           opacity: 0.5;
           cursor: not-allowed;
+        }
+        .rdp-day_button[data-modifier="available"] {
+          background-color: #dcfce7;
+          color: #166534;
+        }
+        .rdp-day_button[data-modifier="booked"] {
+          background-color: #fee2e2;
+          color: #991b1b;
+          text-decoration: line-through;
         }
       `}</style>
     </div>
