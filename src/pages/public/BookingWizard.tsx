@@ -282,6 +282,11 @@ export default function BookingWizard() {
     }
   };
 
+  const getDateAvailability = (date: Date) => {
+    const dateStr = format(date, 'yyyy-MM-dd');
+    return dateAvailability.get(dateStr);
+  };
+
   const formatPhone = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
     if (cleaned.startsWith('212')) {
