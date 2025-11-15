@@ -210,7 +210,6 @@ export default function BookingWizard() {
   };
 
   const checkSlotAvailability = async (slot: TimeSlot) => {
-    setIsCheckingSlot(true);
     
     // Simulate API check
     await new Promise(resolve => setTimeout(resolve, 500));
@@ -220,15 +219,12 @@ export default function BookingWizard() {
     
     if (!isStillAvailable) {
       toast.error('Ce créneau vient d\'être réservé. Voici le prochain disponible à 11:50');
-      setIsCheckingSlot(false);
       return false;
     }
     
     // Lock slot for 60 seconds (optimistic UI)
     setBooking(prev => ({ ...prev, timeSlot: slot }));
-    setShowTimeSlots(false);
     setCurrentStep(3);
-    setIsCheckingSlot(false);
     return true;
   };
 
@@ -241,7 +237,6 @@ export default function BookingWizard() {
     setSelectedDate(date);
     if (date) {
       setBooking(prev => ({ ...prev, date }));
-      setShowTimeSlots(true);
     }
   };
 

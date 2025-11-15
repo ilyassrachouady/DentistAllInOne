@@ -7,6 +7,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Calendar } from '@/components/ui/calendar';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import {
@@ -408,7 +415,7 @@ export default function PatientDemoPage() {
                     <Input
                       id="name"
                       value={patientName}
-                      onChange={(e) => setPatientName(e.target.value)}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPatientName(e.target.value)}
                       className="rounded-xl"
                       placeholder="Votre nom"
                       required
@@ -421,7 +428,7 @@ export default function PatientDemoPage() {
                       id="phone"
                       type="tel"
                       value={patientPhone}
-                      onChange={(e) => setPatientPhone(e.target.value)}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPatientPhone(e.target.value)}
                       className="rounded-xl"
                       placeholder="+212 6 12 34 56 78"
                       required
@@ -434,7 +441,7 @@ export default function PatientDemoPage() {
                       id="email"
                       type="email"
                       value={patientEmail}
-                      onChange={(e) => setPatientEmail(e.target.value)}
+                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPatientEmail(e.target.value)}
                       className="rounded-xl"
                       placeholder="votre@email.com"
                     />
@@ -445,7 +452,7 @@ export default function PatientDemoPage() {
                     <Textarea
                       id="notes"
                       value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
+                       onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setNotes(e.target.value)}
                       className="rounded-xl"
                       placeholder="Informations supplémentaires..."
                       rows={3}
