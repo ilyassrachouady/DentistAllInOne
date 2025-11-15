@@ -46,6 +46,20 @@ function CalendarScheduler({
     onDateChange?.(newDate);
   };
 
+  const availableDates = [
+    new Date(2024, 6, 1),
+    new Date(2024, 6, 2),
+    new Date(2024, 6, 3),
+    new Date(2024, 6, 4),
+  ];
+
+  const bookedDates = [
+    new Date(2024, 6, 5),
+    new Date(2024, 6, 6),
+    new Date(2024, 6, 9),
+    new Date(2024, 6, 10),
+  ];
+
   return (
     <div className="w-full">
       <Card className="w-full max-w-4xl shadow-lg border border-gray-200 bg-white">
@@ -58,6 +72,14 @@ function CalendarScheduler({
               onSelect={handleDateSelect}
               disabled={disabledDates}
               locale={fr}
+              modifiers={{
+                available: availableDates,
+                booked: bookedDates,
+              }}
+              modifiersClassNames={{
+                available: "available",
+                booked: "booked",
+              }}
             />
           </div>
 
